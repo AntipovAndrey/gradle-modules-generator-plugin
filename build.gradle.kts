@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     compile(kotlin("stdlib-jdk8"))
+    compile("org.yaml:snakeyaml:1.23")
     testCompile("junit", "junit", "4.12")
 }
 
