@@ -1,0 +1,26 @@
+<idea-plugin>
+    <id>com.github.antipovandrey.generator</id>
+    <name>RIdea</name>
+    <vendor email="antipov11.11@gmail.com" url="https://github.com/AntipovAndrey">Antipov Andrey</vendor>
+
+    <description><![CDATA[
+    Enter short description for your plugin here.<br>
+    <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.lang</depends>
+
+    <actions>
+        <group id="GradleGeneratorGroup">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+            <action id="GenerateGradleModule"
+                    class="com.github.antipovandrey.generator.GenerateModuleAction"
+                    text="Generate Gradle Module"
+                    description="Generate Gradle Module using templates">
+                <keyboard-shortcut first-keystroke="ctrl alt G" keymap="$default"/>
+            </action>
+        </group>
+    </actions>
+</idea-plugin>
