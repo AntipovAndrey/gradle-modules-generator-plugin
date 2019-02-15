@@ -1,7 +1,7 @@
 package com.github.antipovandrey.generator
 
-import com.github.antipovandrey.generator.config.ConfigReader.readConfig
-import com.github.antipovandrey.generator.config.ConfigWriter
+import com.github.antipovandrey.generator.config.ModuleTemplateReader.readModuleTemplates
+import com.github.antipovandrey.generator.config.ModuleTemplateWriter
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.command.WriteCommandAction
@@ -16,12 +16,12 @@ class GenerateModuleAction : AnAction(), DumbAware {
         val project = e.project ?: return
         val basePath = project.basePath ?: return
 
-        val moduleTemplates = readConfig(basePath)
+        val moduleTemplates = readModuleTemplates(basePath)
 
         val moduleName = askUserForModuleBaseName(project) ?: return
 
         WriteCommandAction.runWriteCommandAction(project) {
-            ConfigWriter.writeModuleTemplates(moduleTemplates, ModuleConfig(moduleName, basePath))
+            ModuleTemplateWriter.writeModuleTemplates(moduleTemplates, ModuleConfig(moduleName, basePath))
         }
     }
 
