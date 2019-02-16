@@ -1,11 +1,22 @@
 <idea-plugin>
     <id>com.github.antipovandrey.generator</id>
-    <name>RIdea</name>
+    <name>Gradle Modules Generator</name>
     <vendor email="antipov11.11@gmail.com" url="https://github.com/AntipovAndrey">Antipov Andrey</vendor>
 
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    Reduce boilerplate routine in multi-module gradle projects.<br>
+    To make it works, follow these steps: <br>
+    <ul>
+        <li>Create a directory called <em>gradle_templates</em> in the root of your project.</li>
+        <li>Create subdirectories in that folder. Their names don't matter.</li>
+        <li>Inside of each folder create a <em>config.yml</em> file and define a name of your module.</li>
+        <li>Also, create additional folders - <em>static</em> and <em>template</em> and put your files in them.</li>
+    </ul>
+    All content from a <em>static</em> directory will be copied inside of your created module. <br/>
+    In a <em>template</em> folder you can put Apache Velocity templates which will be resolved before copying.
+    For now, you can use only <strong>module.baseName</strong> variable in your templates. It will be a value that you enter in the dialog when Ctrl + Alt + G was pressed. <br/>
+    <em>config.yml</em> is a Velocity template as well.
+    Besides <em>name</em> property in a config you can use a <em>directories</em> property to define a list of directories to be created. You should use it when your directory name depends on a <em>module.baseName</em> and use empty directories inside of a <em>static</em> folder in other cases.
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
