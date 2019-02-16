@@ -18,6 +18,11 @@ class GenerateModuleAction : AnAction(), DumbAware {
 
         val moduleBaseName = askUserForModuleBaseName(project) ?: return
 
+        if (moduleBaseName.isBlank()) {
+            showMessageDialog(project, "You have to input module's base name", "No name specified", null)
+            return
+        }
+
         val moduleTemplates = ModuleTemplateReader.readModuleTemplates(basePath)
         WriteCommandAction.runWriteCommandAction(project) {
             ModuleTemplateWriter.writeModuleTemplates(moduleTemplates, moduleBaseName, basePath)
@@ -26,9 +31,6 @@ class GenerateModuleAction : AnAction(), DumbAware {
 
     private fun askUserForModuleBaseName(project: Project): String? {
         val inputName: String? = showInputDialog(project, "Enter new module base name", "New Module", null)
-        if (inputName.isNullOrBlank()) {
-            showMessageDialog(project, "You have to input module's base name", "No name specified", null)
-        }
         return inputName?.trim()
     }
 }
