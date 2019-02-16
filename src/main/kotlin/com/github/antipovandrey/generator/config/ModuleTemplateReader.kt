@@ -5,6 +5,7 @@ import com.github.antipovandrey.generator.model.Resources
 import org.yaml.snakeyaml.Yaml
 import java.io.File
 import java.io.FileFilter
+import java.io.StringReader
 
 object ModuleTemplateReader {
 
@@ -17,21 +18,21 @@ object ModuleTemplateReader {
             .map { readModule(it) }
     }
 
+    fun readResolvedConfig(config: File, props: Map<String, Any>): Config {
+        val resolvedTemplateString = TemplateResolver.resolveTemplate(config, props)
+        return yaml.loadAs<Config>(StringReader(resolvedTemplateString), Config::class.java)
+    }
+
     private fun readModule(moduleDirectory: File): ModuleTemplate {
-        val config = readConfig(moduleDirectory)
+        val configFile = moduleDirectory.resolve(Settings.configFileName)
         val staticResources = getResources(moduleDirectory, Settings.staticFilesName)
         val templateResources = getResources(moduleDirectory, Settings.templateFilesName)
-        return ModuleTemplate(config.name, staticResources, templateResources)
+        return ModuleTemplate(configFile, staticResources, templateResources)
     }
 
     private fun getResources(moduleDirectory: File, resourcesName: String): Resources {
         val resourcesDirectory = moduleDirectory.resolve(resourcesName)
         return Resources(findFiles(resourcesDirectory), resourcesDirectory)
-    }
-
-    private fun readConfig(moduleDirectory: File): Config {
-        val configFile = moduleDirectory.resolve(Settings.configFileName)
-        return yaml.loadAs<Config>(configFile.inputStream(), Config::class.java)
     }
 
     private fun findFiles(directory: File): List<File> {
