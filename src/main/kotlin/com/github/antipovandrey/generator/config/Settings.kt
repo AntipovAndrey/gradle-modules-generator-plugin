@@ -7,5 +7,5 @@ object Settings {
     const val templateFilesName = "template"
     const val configFileName = "config.yml"
 
-    const val baseNameKey = "BASE_MODULE_NAME"
+    const val moduleTemplateKey = "module"
 }
