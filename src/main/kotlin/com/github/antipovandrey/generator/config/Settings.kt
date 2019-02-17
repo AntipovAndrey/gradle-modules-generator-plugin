@@ -7,5 +7,8 @@ object Settings {
     const val templateFilesName = "template"
     const val configFileName = "config.yml"
 
+    const val gradleSettings = "settings.gradle"
+    const val gradleSettingsKts = "settings.gradle.kts"
+
     const val moduleTemplateKey = "module"
 }

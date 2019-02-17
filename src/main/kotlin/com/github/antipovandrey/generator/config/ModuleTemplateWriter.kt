@@ -21,13 +21,16 @@ object ModuleTemplateWriter {
 
         val moduleResolvedName = resolvedConfig.name
 
-        val moduleDirectory = File(basePath)
+        val projectRoot = File(basePath)
+
+        val moduleDirectory = projectRoot
             .resolve(moduleResolvedName)
             .also { Files.createDirectories(it.toPath()) }
 
         writeDirectories(resolvedConfig.directories, moduleDirectory)
         writeStaticFiles(template, moduleDirectory)
         writeTemplateFiles(template, moduleDirectory, moduleConfig)
+        writeGradleSettings(resolvedConfig.name, projectRoot)
     }
 
     private fun writeDirectories(directoriesToCreate: List<String>, root: File) {
@@ -53,6 +56,16 @@ object ModuleTemplateWriter {
                 targetFile.createNewFile()
                 TemplateResolver.resolveTemplate(templateFile, targetFile, templateProperties)
             }
+    }
+
+    private fun writeGradleSettings(moduleName: String, projectRoot: File) {
+        val gradleFile = projectRoot.resolve(Settings.gradleSettings)
+        val gradleFileKts = projectRoot.resolve(Settings.gradleSettingsKts)
+        if (gradleFile.exists()) {
+            gradleFile.appendText("\ninclude ':$moduleName'")
+        } else if (gradleFileKts.exists()) {
+            gradleFileKts.appendText("\ninclude(\"$moduleName\"")
+        }
     }
 
     private fun getRelativeToModule(originalFile: File, resources: Resources, moduleDirectory: File): File {
