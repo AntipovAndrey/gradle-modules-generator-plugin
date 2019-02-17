@@ -5,5 +5,5 @@ package com.github.antipovandrey.generator.config
  */
 class Config {
     lateinit var name: String
-    lateinit var directories: List<String>
+    var directories: List<String> = emptyList()
 }
