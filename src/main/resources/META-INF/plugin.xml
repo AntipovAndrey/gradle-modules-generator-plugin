@@ -1,8 +1,8 @@
 <idea-plugin>
     <id>com.github.antipovandrey.generator</id>
     <name>Gradle Modules Generator</name>
-    <vendor email="antipov11.11@gmail.com" url="https://github.com/AntipovAndrey">Antipov Andrey</vendor>
-
+        <vendor email="antipov11.11@gmail.com" url="https://github.com/AntipovAndrey">Antipov Andrey</vendor>
+    <idea-version since-build="171.0"/>
     <description><![CDATA[
     Reduce boilerplate routine in multi-module gradle projects.<br>
     To make it works, follow these steps: <br>

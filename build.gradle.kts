@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.github.antipovandrey"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 repositories {
     mavenCentral()
@@ -24,4 +24,8 @@ configure<JavaPluginConvention> {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+intellij {
+    updateSinceUntilBuild = false
 }
