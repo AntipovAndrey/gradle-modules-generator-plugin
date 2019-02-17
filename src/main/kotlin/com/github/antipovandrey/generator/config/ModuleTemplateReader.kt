@@ -12,8 +12,12 @@ object ModuleTemplateReader {
     private val yaml = Yaml()
 
     fun readModuleTemplates(projectPath: String): List<ModuleTemplate> {
-        return File(projectPath)
+        val templatesPath = File(projectPath)
             .resolve(Settings.templateFolderName)
+        if (!templatesPath.exists()) {
+            throw InvalidConfigException("${Settings.templateFolderName} not found in the project")
+        }
+        return templatesPath
             .listFiles(FileFilter { it.isDirectory })
             .map { readModule(it) }
     }

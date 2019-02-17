@@ -1,5 +1,6 @@
 package com.github.antipovandrey.generator
 
+import com.github.antipovandrey.generator.config.InvalidConfigException
 import com.github.antipovandrey.generator.config.ModuleTemplateReader
 import com.github.antipovandrey.generator.config.ModuleTemplateWriter
 import com.intellij.openapi.actionSystem.AnAction
@@ -7,8 +8,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.Messages.showInputDialog
-import com.intellij.openapi.ui.Messages.showMessageDialog
+import com.intellij.openapi.ui.Messages.*
 
 class GenerateModuleAction : AnAction(), DumbAware {
 
@@ -23,9 +23,13 @@ class GenerateModuleAction : AnAction(), DumbAware {
             return
         }
 
-        val moduleTemplates = ModuleTemplateReader.readModuleTemplates(basePath)
-        WriteCommandAction.runWriteCommandAction(project) {
-            ModuleTemplateWriter.writeModuleTemplates(moduleTemplates, moduleBaseName, basePath)
+        try {
+            val moduleTemplates = ModuleTemplateReader.readModuleTemplates(basePath)
+            WriteCommandAction.runWriteCommandAction(project) {
+                ModuleTemplateWriter.writeModuleTemplates(moduleTemplates, moduleBaseName, basePath)
+            }
+        } catch (e: InvalidConfigException) {
+            showErrorDialog(project, e.message, "Invalid config")
         }
     }
 
