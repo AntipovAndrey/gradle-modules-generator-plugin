@@ -3,6 +3,7 @@ package com.github.antipovandrey.generator.config
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.VelocityEngine
 import org.apache.velocity.runtime.RuntimeConstants
+import org.apache.velocity.runtime.log.NullLogChute
 import java.io.File
 import java.io.FileWriter
 import java.io.StringWriter
@@ -14,7 +15,8 @@ object TemplateResolver {
 
     init {
         velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "file")
-        velocityEngine.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, "/")
+        velocityEngine.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, "")
+        velocityEngine.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, NullLogChute::class.java.canonicalName)
         velocityEngine.init()
     }
 
